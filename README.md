@@ -1,8 +1,45 @@
 # Vero Clinic Booking System
 
-A prototype clinic booking system with three distinct user roles — **Patient**, **Physician**, and **Admin** — built per the Vero PRD.
+## What I Built
+- I made a patient booking flow with 3 distinct roles, Patient, Physician, Admin. It’s Built in React with JSON mock data. Patients book themselves, physicians and admins can also do it for them. There's an approval queue, a 48-hour cancellation fee window, and a rebook flow for when a physician cancels. I really tried putting myself in the place of each role to flesh out each side of the demo. 
+---
+## Key Design Decisions
+- Approval queue:  When a physician or admin logs in, the first thing they see is what needs action. Pending appointments sit above the schedule, sorted by urgency. I didn't want people scanning around figuring out where to start.
+- Urgent info banner: Sits at the top of the patient dashboard and changes based on their situation: no appointment, upcoming, or cancelled. Cancelled state goes red and the rebook buttons appear right there. Patients shouldn't have to dig. If you have multiple appointments then you can cycle through them on this so you can keep track with a quick glance.
+- Rebook in one tap: When a physician cancels, three timings show up on the patient’s dashboard. Prior details carry over for easy rebooking. Getting cancelled is already a bad experience; it shouldn't also mean filling everything out again.
+- Merged admin calendar: One calendar has all physicians and it’s color coded. Can use the filter chips to narrow down specific physicians. I thought about separate views per physician but you'd just end up filtering to one anyway, so the merged view makes more sense.
+- Trend graph on the admin dashboard : Live schedule and booking volume together. I didn't want the admin jumping between screens just to see how the week is going.
+- Health card upload : Click the icon, it loads like it's reading the card, fills in the number, saves to their profile. Less typing at intake, and the patient can see it's on file before they show up.
+---
+## What's in the demo
 
-> Prototype only: no real authentication, no payment processing, no external integrations. All data is mocked in memory and **resets on every page refresh**. Email/SMS notifications are UI-only.
+**Patient**
+- Dashboard with a three-state urgent banner: no upcoming appointment, has an upcoming appointment, or physician cancelled (with a 3-slot rebook prompt)
+- 5-step booking wizard: Physician → Date & Time → Details → Health Card (simulated OCR) → Confirm
+- Appointment list with cancel and rebook options
+- 48-hour cancellation fee flow with mandatory acceptance checkbox
+- Notifications via the bell icon
+
+**Physician**
+- Dashboard with pending approvals queue and today's schedule
+- Week/Day schedule with drag-to-reschedule and resize-to-adjust-duration
+- Patient detail drawer: confirm, cancel, or mark complete
+
+**Admin**
+- Dashboard with stat cards, pending approvals (all physicians), and fees-owed list
+- Multi-physician schedule with toggleable filter chips
+- "All Bookings" search and filter table
+- Book-on-behalf-of-patient flow (auto-confirmed)
+
+---
+
+## What I'd Fix With More Time
+- Actually talk to stakeholders and figure out how well the demo would hold up and what features are missing/ not required. 
+- Calendar conflict handling needs work. Dragging a block onto a booked slot isn't cleanly resolved yet. Some sort of basic mutex lock would work. 
+- Add smarter algorithm based rebook suggestions. Right now it is the next three open slots.
+- The booking flow needs a mobile version. Staff use the desktop usually, but the patients probably want mobile.
+- I need to flesh out edge cases and the backend basically. 
+
 
 ---
 
@@ -102,54 +139,29 @@ Or sign in manually with one of these accounts:
 | Physician (Dr. Priya Nair) | `nair@clinic.com` | `doc3` |
 | Admin | `admin@clinic.com` | `admin` |
 
-You can sign out from the sidebar at any time and log back in as a different role to see the same data from a different perspective.
+Sign out from the sidebar anytime and log back in as a different role, you'll see the same data, but from a completely different angle.
 
-### Try this first — a 3-minute happy-path tour
+### Try this first
 
 1. **Log in as a Patient** (e.g. "Patient: James").
-   - On the dashboard, look at the urgent banner at the top — it changes based on whether you have an upcoming appointment.
-   - Click **Book Appointment** to launch the 5-step wizard: *Physician → Date & Time → Details → Health Card → Confirm*.
-   - On the Health Card step, click **Scan health card** — the simulated OCR pre-fills the number after a short delay.
-   - Confirm the booking. It now appears in **Appointments** with a "Pending" status.
-
-2. **Log out, then log in as the matching Physician** (Dr. Chen, Webb, or Nair depending on who you booked with).
-   - On the dashboard, you'll see the new request in the **Pending Approvals** queue.
-   - Click it, then **Confirm** in the drawer. The patient's appointment is now confirmed.
-   - Open the **Schedule** page (left sidebar). Try dragging the appointment to a different time, or grab its bottom edge to resize its duration.
-
+   - The banner at the top of the dashboard changes based on whether you have an upcoming appointment, it's worth noticing before you do anything else.
+   - Click **Book Appointment** to walk through the 5-step wizard: *Physician → Date & Time → Details → Health Card → Confirm*.
+   - On the Health Card step, click **Scan health card**. The simulated OCR fills in the number after a short delay.
+   - Confirm the booking. It appears in **Appointments** with a "Pending" status.
+2. **Log out, then log in as the matching Physician** (Dr. Chen, Webb, or Nair).
+   - Your new request is sitting in the **Pending Approvals** queue on the dashboard.
+   - Click it, then **Confirm** in the drawer. The appointment is now confirmed on the patient's side too.
+   - Open **Schedule** in the left sidebar. Try dragging the appointment to a different time, or grab its bottom edge to stretch the duration.
 3. **Log out, then log in as Admin**.
-   - The **Dashboard** shows stat cards across all physicians, plus the global pending queue and any fees owed.
-   - **Schedule** shows all physicians overlaid — use the chip filters at the top to toggle individual doctors on/off.
+   - The **Dashboard** shows stat cards across all physicians, the global pending queue, and any fees owed.
+   - **Schedule** overlays all physicians at once, use the chip filters at the top to toggle individual doctors on or off.
    - **All Bookings** is a searchable table of every appointment in the system.
    - **Book on behalf** lets you create an auto-confirmed appointment for any patient.
+4. **(Optional) Test the cancellation fee flow.** Back as a Patient, find an appointment within 48 hours of "now" and cancel it. You'll hit a mandatory fee acceptance checkbox before the cancellation goes through.
 
-4. **(Optional) Test the cancellation fee flow.** Back as a Patient, find an appointment within 48 hours of "now" and click **Cancel**. You'll see the mandatory fee acceptance checkbox before the cancellation goes through.
+> Refreshing the browser wipes everything back to the seed data. Good to know if the demo gets into a weird state.
 
-> Remember: refreshing the browser resets the entire app to its seed data. Use this if the demo gets into a weird state.
 
----
-
-## What's in the prototype
-
-**Patient**
-- Dashboard with three-state urgent banner (no upcoming / has upcoming / physician cancelled, with 3-slot rebook)
-- 5-step booking wizard: Physician → Date & Time → Details → Health Card (simulated OCR) → Confirm
-- Appointment list with cancel/rebook
-- 48-hour cancellation fee flow with mandatory acceptance checkbox
-- Notifications panel via bell icon
-
-**Physician**
-- Dashboard with pending approvals queue and today's schedule
-- Week/Day schedule with drag-to-reschedule and resize-to-adjust-duration
-- Patient detail drawer with confirm / cancel / mark-complete
-
-**Admin**
-- Dashboard with stat cards, pending approvals queue (all physicians), and fees-owed list
-- Multi-physician schedule view with toggleable filter chips
-- "All Bookings" search & filter table
-- Book-on-behalf-of-patient flow (auto-confirmed)
-
----
 
 ## File layout
 
