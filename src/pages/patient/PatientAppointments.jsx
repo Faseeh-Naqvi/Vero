@@ -135,15 +135,19 @@ export default function PatientAppointments() {
         title="Pick a new time"
       >
         {rebookAppt && (
-          <div className="space-y-4">
-            <p className="text-sm text-ink-secondary">
-              Your previous appointment with{' '}
-              <span className="font-medium text-ink-primary">
-                {physicians.find((p) => p.id === rebookAppt.physicianId)?.name}
-              </span>{' '}
-              was cancelled. Pick one of the next available times:
-            </p>
-            <RebookSlots patient={patient} originalAppointment={rebookAppt} />
+          <div className="space-y-5">
+            <div className="rounded-card border border-red-100 bg-gradient-to-b from-red-50/90 to-white px-4 py-3.5 shadow-sm">
+              <p className="text-sm font-medium text-ink-primary">
+                This visit was cancelled by{' '}
+                <span className="text-ink-primary">
+                  {physicians.find((p) => p.id === rebookAppt.physicianId)?.name}
+                </span>
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-secondary">
+                Choose a suggested slot below, or open the full calendar to pick any available time with your details already filled in.
+              </p>
+            </div>
+            <RebookSlots patient={patient} originalAppointment={rebookAppt} variant="drawer" />
           </div>
         )}
       </AppointmentDrawer>
