@@ -56,7 +56,33 @@ export default function UrgentBanner({
   const goPrev = () => setSlide((s) => (s - 1 + len) % len);
   const goNext = () => setSlide((s) => (s + 1) % len);
 
-  // Upcoming pending or confirmed takes priority so a new request replaces the cancellation banner.
+  if (cancelledByPhysician) {
+    const phys = physicians.find((p) => p.id === cancelledByPhysician.physicianId);
+    return (
+      <div className="rounded-card border border-red-200 bg-red-50 p-5 mb-6 animate-fadein">
+        <div className="flex items-start gap-3">
+          <div className="shrink-0 w-9 h-9 rounded-full bg-status-red/15 flex items-center justify-center text-status-red">
+            <AlertCircle size={18} />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-ink-primary">Your appointment was cancelled</h3>
+            <p className="text-sm text-ink-secondary mt-1">
+              {phys?.name || 'Your physician'} cancelled your{' '}
+              <span className="font-medium text-ink-primary">{fmtDateLong(cancelledByPhysician.date)}</span>{' '}
+              appointment. Please pick a new time below.
+            </p>
+            <div className="mt-4">
+              <RebookSlots patient={patient} originalAppointment={cancelledByPhysician} />
+            </div>
+            <p className="text-xs text-ink-secondary mt-3">
+              A confirmation will be sent to your email and SMS.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (upcomingConfirmedOrPending) {
     const phys = physicians.find((p) => p.id === upcomingConfirmedOrPending.physicianId);
     const isPending = upcomingConfirmedOrPending.status === 'pending';
@@ -175,33 +201,6 @@ export default function UrgentBanner({
             ))}
           </div>
         )}
-      </div>
-    );
-  }
-
-  if (cancelledByPhysician) {
-    const phys = physicians.find((p) => p.id === cancelledByPhysician.physicianId);
-    return (
-      <div className="rounded-card border border-red-200 bg-red-50 p-5 mb-6 animate-fadein">
-        <div className="flex items-start gap-3">
-          <div className="shrink-0 w-9 h-9 rounded-full bg-status-red/15 flex items-center justify-center text-status-red">
-            <AlertCircle size={18} />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-ink-primary">Your appointment was cancelled</h3>
-            <p className="text-sm text-ink-secondary mt-1">
-              {phys?.name || 'Your physician'} cancelled your{' '}
-              <span className="font-medium text-ink-primary">{fmtDateLong(cancelledByPhysician.date)}</span>{' '}
-              appointment. Please pick a new time below.
-            </p>
-            <div className="mt-4">
-              <RebookSlots patient={patient} originalAppointment={cancelledByPhysician} />
-            </div>
-            <p className="text-xs text-ink-secondary mt-3">
-              A confirmation will be sent to your email and SMS.
-            </p>
-          </div>
-        </div>
       </div>
     );
   }
