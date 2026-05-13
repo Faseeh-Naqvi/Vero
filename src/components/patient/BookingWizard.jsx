@@ -49,8 +49,16 @@ function StepIndicator({ steps, currentIdx }) {
 export default function BookingWizard({ mode = 'patient', patient, onComplete }) {
   // mode: 'patient' or 'admin'
   const isAdmin = mode === 'admin';
-  const { patients, physicians, addAppointment, addNotification, showToast, notifications, markNotificationRead } =
-    useApp();
+  const {
+    patients,
+    physicians,
+    addAppointment,
+    updateAppointment,
+    addNotification,
+    showToast,
+    notifications,
+    markNotificationRead,
+  } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -146,6 +154,7 @@ export default function BookingWizard({ mode = 'patient', patient, onComplete })
       });
       const cancelledId = location.state?.rebook?.cancelledAppointmentId;
       if (cancelledId) {
+        updateAppointment(cancelledId, { replacedByAppointmentId: appt.id });
         dismissCancellationNoticeForAppointment(cancelledId, notifications, markNotificationRead);
       }
     }

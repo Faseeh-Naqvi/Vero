@@ -60,7 +60,9 @@ export default function PatientAppointments() {
                 const phys = physicians.find((p) => p.id === appt.physicianId);
                 const isOpen = appt.status === 'pending' || appt.status === 'confirmed';
                 const isPhysicianCancelled =
-                  appt.status === 'cancelled' && (appt.cancelledBy === 'physician' || appt.cancelledBy === 'admin');
+                  appt.status === 'cancelled' &&
+                  (appt.cancelledBy === 'physician' || appt.cancelledBy === 'admin') &&
+                  !appt.replacedByAppointmentId;
                 return (
                   <tr key={appt.id} className="table-row">
                     <td className="table-cell">
@@ -147,7 +149,12 @@ export default function PatientAppointments() {
                 Choose a suggested slot below, or open the full calendar to pick any available time with your details already filled in.
               </p>
             </div>
-            <RebookSlots patient={patient} originalAppointment={rebookAppt} variant="drawer" />
+            <RebookSlots
+              patient={patient}
+              originalAppointment={rebookAppt}
+              variant="drawer"
+              onReplacementBooked={() => setRebookAppt(null)}
+            />
           </div>
         )}
       </AppointmentDrawer>

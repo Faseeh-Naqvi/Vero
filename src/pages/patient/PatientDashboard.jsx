@@ -41,7 +41,9 @@ export default function PatientDashboard() {
         !n.read
     );
     if (!unread) return null;
-    return myAppointments.find((a) => a.id === unread.appointmentId) || null;
+    const appt = myAppointments.find((a) => a.id === unread.appointmentId);
+    if (!appt || appt.replacedByAppointmentId) return null;
+    return appt;
   }, [notifications, currentUser?.id, myAppointments]);
 
   const handleView = (appt) => setDrawerAppt(appt);
