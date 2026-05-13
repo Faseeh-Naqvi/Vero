@@ -2,7 +2,14 @@
 
 ## What I Built
 - I made a patient booking flow with 3 distinct roles, Patient, Physician, Admin. It’s Built in React with JSON mock data. Patients book themselves, physicians and admins can also do it for them. There's an approval queue, a 48-hour cancellation fee window, and a rebook flow for when a physician cancels. I really tried putting myself in the place of each role to flesh out each side of the demo. 
-
+---
+## Key Design Decisions
+- Approval queue:  When a physician or admin logs in, the first thing they see is what needs action. Pending appointments sit above the schedule, sorted by urgency. I didn't want people scanning around figuring out where to start.
+- Urgent info banner: Sits at the top of the patient dashboard and changes based on their situation: no appointment, upcoming, or cancelled. Cancelled state goes red and the rebook buttons appear right there. Patients shouldn't have to dig. If you have multiple appointments then you can cycle through them on this so you can keep track with a quick glance.
+- Rebook in one tap: When a physician cancels, three timings show up on the patient’s dashboard. Prior details carry over for easy rebooking. Getting cancelled is already a bad experience; it shouldn't also mean filling everything out again.
+- Merged admin calendar: One calendar has all physicians and it’s color coded. Can use the filter chips to narrow down specific physicians. I thought about separate views per physician but you'd just end up filtering to one anyway, so the merged view makes more sense.
+- Trend graph on the admin dashboard : Live schedule and booking volume together. I didn't want the admin jumping between screens just to see how the week is going.
+- Health card upload : Click the icon, it loads like it's reading the card, fills in the number, saves to their profile. Less typing at intake, and the patient can see it's on file before they show up.
 ---
 ## What's in the demo
 
@@ -25,13 +32,6 @@
 - Book-on-behalf-of-patient flow (auto-confirmed)
 
 ---
-## Key Design Decisions
-- Approval queue:  When a physician or admin logs in, the first thing they see is what needs action. Pending appointments sit above the schedule, sorted by urgency. I didn't want people scanning around figuring out where to start.
-- Urgent info banner: Sits at the top of the patient dashboard and changes based on their situation: no appointment, upcoming, or cancelled. Cancelled state goes red and the rebook buttons appear right there. Patients shouldn't have to dig. If you have multiple appointments then you can cycle through them on this so you can keep track with a quick glance.
-- Rebook in one tap: When a physician cancels, three timings show up on the patient’s dashboard. Prior details carry over for easy rebooking. Getting cancelled is already a bad experience; it shouldn't also mean filling everything out again.
-- Merged admin calendar: One calendar has all physicians and it’s color coded. Can use the filter chips to narrow down specific physicians. I thought about separate views per physician but you'd just end up filtering to one anyway, so the merged view makes more sense.
-- Trend graph on the admin dashboard : Live schedule and booking volume together. I didn't want the admin jumping between screens just to see how the week is going.
-- Health card upload : Click the icon, it loads like it's reading the card, fills in the number, saves to their profile. Less typing at intake, and the patient can see it's on file before they show up.
 
 ## What I'd Fix With More Time
 - Actually talk to stakeholders and figure out how well the demo would hold up and what features are missing/ not required. 
