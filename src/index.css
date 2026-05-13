@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-surface-page text-ink-primary font-sans antialiased;
+    font-size: 14px;
+  }
+  * {
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 h-9 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white hover:bg-brand-hover;
+  }
+  .btn-primary-lg {
+    @apply btn-primary h-10 px-5 text-base;
+  }
+  .btn-secondary {
+    @apply btn bg-white border border-line text-ink-primary hover:bg-surface-hover;
+  }
+  .btn-ghost {
+    @apply btn text-ink-secondary hover:bg-surface-hover hover:text-ink-primary;
+  }
+  .btn-danger {
+    @apply btn bg-status-red text-white hover:bg-red-700;
+  }
+  .btn-success {
+    @apply btn bg-status-green text-white hover:bg-green-700;
+  }
+  .btn-compact {
+    @apply h-8 px-3 text-sm;
+  }
+
+  .card {
+    @apply bg-surface-card border border-line rounded-card;
+  }
+
+  .input {
+    @apply w-full h-10 px-3 rounded-btn border border-line bg-white text-ink-primary placeholder:text-ink-secondary focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition;
+  }
+  .textarea {
+    @apply input h-auto min-h-[88px] py-2 resize-y;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-ink-primary mb-1.5;
+  }
+  .hint {
+    @apply text-xs text-ink-secondary mt-1;
+  }
+
+  .table-head-cell {
+    @apply text-xs font-medium uppercase tracking-wider text-ink-secondary text-left px-4 py-3;
+  }
+  .table-cell {
+    @apply px-4 py-3 text-sm text-ink-primary align-middle;
+  }
+  .table-row {
+    @apply border-b border-line hover:bg-surface-hover transition-colors;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-xs font-medium border border-line bg-white text-ink-primary hover:bg-surface-hover cursor-pointer transition;
+  }
+  .chip-active {
+    @apply bg-brand text-white border-brand hover:bg-brand-hover;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-3 h-9 rounded-btn text-sm font-medium text-ink-secondary hover:bg-surface-hover hover:text-ink-primary transition-colors;
+  }
+  .nav-link-active {
+    @apply bg-brand-tint text-brand hover:bg-brand-tint hover:text-brand;
+  }
+}
+
+/* react-big-calendar tweaks to fit our visual style */
+.rbc-calendar {
+  @apply font-sans text-sm;
+}
+.rbc-toolbar button {
+  @apply text-sm rounded-btn border-line text-ink-primary;
+}
+.rbc-toolbar button.rbc-active {
+  @apply bg-brand text-white border-brand;
+}
+.rbc-header {
+  @apply text-xs font-medium uppercase tracking-wider text-ink-secondary py-2 border-line;
+}
+.rbc-time-header,
+.rbc-time-content,
+.rbc-month-view,
+.rbc-time-view,
+.rbc-time-header-content,
+.rbc-time-gutter,
+.rbc-day-bg,
+.rbc-day-slot .rbc-time-slot {
+  @apply border-line;
+}
+.rbc-today {
+  background-color: #f0f6fb !important;
+}
+.rbc-event {
+  @apply rounded-btn border-none text-xs px-2 py-1;
+  overflow: hidden !important;
+}
+.rbc-event-content {
+  overflow: hidden !important;
+  height: 100%;
+  min-height: 0;
+}
+.rbc-addons-dnd .rbc-event {
+  overflow: hidden !important;
+}
+.rbc-off-range-bg {
+  background-color: #fafafa;
+}
+.rbc-time-gutter .rbc-timeslot-group {
+  @apply text-xs text-ink-secondary;
+}
+.rbc-current-time-indicator {
+  background-color: #3b82c4;
+  height: 2px;
+}
+
+@keyframes vero-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes vero-slidein {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes vero-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-fadein {
+  animation: vero-fadein 200ms ease-out both;
+}
+.animate-slidein {
+  animation: vero-slidein 220ms ease-out both;
+}
+.animate-pop {
+  animation: vero-pop 420ms cubic-bezier(0.2, 0.8, 0.4, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadein,
+  .animate-slidein,
+  .animate-pop {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
