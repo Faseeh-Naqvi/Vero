@@ -10,6 +10,7 @@
 - Merged admin calendar: One calendar has all physicians and it’s color coded. Can use the filter chips to narrow down specific physicians. I thought about separate views per physician but you'd just end up filtering to one anyway, so the merged view makes more sense.
 - Trend graph on the admin dashboard : Live schedule and booking volume together. I didn't want the admin jumping between screens just to see how the week is going.
 - Health card upload : Click the icon, it loads like it's reading the card, fills in the number, saves to their profile. Less typing at intake, and the patient can see it's on file before they show up.
+- Default appointment block size: On avg 13-24 minutes. The Doctor can adjust the time if the consultation seems like it will take longer. (https://www.cihi.ca/en/topics/access-and-wait-times/reports-and-releases)
 ---
 ## What's in the demo
 
